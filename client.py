@@ -23,7 +23,6 @@ def connect(addr, id):
         raw = ws.recv()
         log.debug("# %d\tData received: %d bytes", id, len(raw))
         data = json.loads(raw)
-        log.debug(data)
         session.headers = {"User-Agent": data["user"]}
 
         if data["cont"] != "":
@@ -41,8 +40,6 @@ def connect(addr, id):
         content = base64.b64encode(content)
         content = content.decode()
 
-        print(response.headers)
-
         location = ""
         if "Location" in response.headers.keys():
             location = response.headers["Location"]
@@ -53,7 +50,7 @@ def connect(addr, id):
 
 
 def main():
-    num = 10
+    num = 500
 
     for i in range(num):
         t = threading.Thread(target=connect, args=["ws://localhost:8080/websocket", i])
